@@ -1,368 +1,117 @@
 <!DOCTYPE html>
-
-<html lang="ms">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="web_standard" name="shell-type" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=IBM+Plex+Sans:wght@500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <style>
-        @layer base {
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
-            body {
-                overscroll-behavior: none;
-            }
-
-            main>:first-child {
-                margin-top: 0 !important;
-            }
-
-            main>:last-child {
-                margin-bottom: 0 !important;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "inverse-primary": "#aec7f6",
-                        "on-error-container": "#93000a",
-                        "secondary-fixed-dim": "#ffb4aa",
-                        "tertiary-container": "#c9a900",
-                        "inverse-on-surface": "#f0f1f2",
-                        "secondary-container": "#e80f16",
-                        "on-secondary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "primary-fixed-dim": "#aec7f6",
-                        "on-secondary-fixed": "#410001",
-                        "primary": "#000a1e",
-                        "on-tertiary-fixed": "#221b00",
-                        "surface-container": "#edeeef",
-                        "on-background": "#191c1d",
-                        "on-secondary-container": "#fffbff",
-                        "tertiary-fixed-dim": "#e9c400",
-                        "outline-variant": "#c4c6cf",
-                        "on-primary-fixed": "#001b3d",
-                        "surface-tint": "#465f88",
-                        "on-tertiary-container": "#4c3f00",
-                        "tertiary-fixed": "#ffe16d",
-                        "error-container": "#ffdad6",
-                        "on-tertiary": "#ffffff",
-                        "surface-bright": "#f8f9fa",
-                        "surface": "#f8f9fa",
-                        "outline": "#74777f",
-                        "background": "#f8f9fa",
-                        "on-tertiary-fixed-variant": "#544600",
-                        "surface-container-low": "#f3f4f5",
-                        "surface-dim": "#d9dadb",
-                        "on-surface": "#191c1d",
-                        "on-error": "#ffffff",
-                        "secondary": "#bc000c",
-                        "inverse-surface": "#2e3132",
-                        "primary-fixed": "#d6e3ff",
-                        "surface-container-highest": "#e1e3e4",
-                        "on-surface-variant": "#44474e",
-                        "on-secondary-fixed-variant": "#930007",
-                        "on-primary": "#ffffff",
-                        "surface-container-high": "#e7e8e9",
-                        "error": "#ba1a1a",
-                        "surface-variant": "#e1e3e4",
-                        "primary-container": "#002147",
-                        "tertiary": "#705d00",
-                        "secondary-fixed": "#ffdad5",
-                        "on-primary-container": "#708ab5",
-                        "on-primary-fixed-variant": "#2d476f"
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.125rem",
-                        lg: "0.25rem",
-                        xl: "0.5rem",
-                        full: "0.75rem"
-                    },
-                    spacing: {},
-                    fontFamily: {
-                        headline: ["IBM Plex Sans"],
-                        display: ["IBM Plex Sans"],
-                        body: ["Work Sans"],
-                        label: ["Hanken Grotesk"]
-                    },
-                    fontSize: {}
-                }
-            }
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Scheme Management | KPMB Student Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { primary:'#00132D', 'primary-container':'#082344', secondary:'#E6B422', 'on-secondary':'#211700', 'secondary-fixed':'#FFD75E', 'secondary-container':'#E6B422', 'surface-container-low':'#F5F3F2', 'surface-container-lowest':'#FFFFFF', 'surface-container-highest':'#DCE2EA', 'on-primary':'#F8FAFC' }, fontFamily: { headline:['Hanken Grotesk','sans-serif'] } } } };
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0,1&display=swap" rel="stylesheet">
+    <style>body{font-family:'Hanken Grotesk',sans-serif}.navy{background:#002147}.gold{color:#b58a00}.field{width:100%;border:1px solid #c4c6cf;border-radius:.5rem;padding:.65rem .75rem;background:white}.field:focus{outline:2px solid #ffe088;border-color:#b58a00}
+        .sidebar { background-color:#00132D !important; color:#F8FAFC !important; }
+        .sidebar .text-white { color:#fff !important; }
+        .sidebar .text-slate-200 { color:#e2e8f0 !important; }
+        .sidebar .text-slate-300 { color:#cbd5e1 !important; }
+        .sidebar .text-slate-400 { color:#94a3b8 !important; }
+        .sidebar .text-secondary-fixed { color:#FFD75E !important; }
+        .sidebar > div:first-child > div:first-child { background-color:rgba(8,35,68,.75) !important; }
+        .topbar { background:rgba(255,255,255,.96) !important; color:#0f172a; }
+        .material-symbols-outlined { font-family:'Material Symbols Outlined'; font-weight:normal; font-style:normal; font-size:24px; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:'liga'; -webkit-font-smoothing:antialiased; }
+</style>
 </head>
+<body class="bg-[#fcf9f8] text-slate-800 min-h-screen">
+<div class="min-h-screen md:flex">
+    @php
+    $userName = auth()->user()->name ?? 'Pegawai UPP';
+    $displaySession = $academicSession ?? $currentAcademicSession ?? 'Sesi akademik belum ditetapkan';
 
-<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
-    
-    <div class="{{ auth()->check() && auth()->user()->role === 'student' ? 'ml-72 w-[calc(100%-18rem)]' : 'w-full' }}">
-        @include('layouts.partials.visitor-topbar')
-    </div>
+    $uppSidebarGroups = [
+        [
+            'label' => 'PENGURUSAN UTAMA',
+            'items' => [
+                ['label' => 'Dashboard UPP', 'icon' => 'dashboard', 'url' => '/upp/dashboard', 'patterns' => ['upp/dashboard']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN PELAJAR & PENSYARAH',
+            'items' => [
+                ['label' => 'Pengurusan Pelajar', 'icon' => 'groups', 'url' => '/upp/students', 'patterns' => ['upp/students*']],
+                ['label' => 'Pengurusan Pensyarah', 'icon' => 'badge', 'url' => '/upp/lecturers', 'patterns' => ['upp/lecturers*']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN AKADEMIK',
+            'items' => [
+                ['label' => 'Pengurusan Subjek', 'icon' => 'menu_book', 'url' => '/upp/subjects', 'patterns' => ['upp/subjects*']],
+                ['label' => 'Pengurusan Kelas', 'icon' => 'meeting_room', 'url' => '/upp/classes', 'patterns' => ['upp/classes*']],
+                ['label' => 'Skim Penilaian', 'icon' => 'fact_check', 'url' => '/upp/assessment-schemes', 'patterns' => ['upp/assessment-schemes*']],
+            ],
+        ],
+        [
+            'label' => 'PENDAFTARAN & PEMANTAUAN',
+            'items' => [
+                ['label' => 'Pemantauan Pendaftaran', 'icon' => 'how_to_reg', 'url' => '/upp/subject-registrations', 'patterns' => ['upp/subject-registrations*']],
+                ['label' => 'Laporan Pendaftaran', 'icon' => 'summarize', 'url' => '/upp/registration-report', 'patterns' => ['upp/registration-report*']],
+            ],
+        ],
+        [
+            'label' => 'KEPUTUSAN & LAPORAN',
+            'items' => [
+                ['label' => 'Laporan Keputusan', 'icon' => 'analytics', 'url' => '/upp/result-report', 'patterns' => ['upp/result-report*']],
+            ],
+        ],
+    ];
+@endphp
 
-    <div class="flex min-h-screen">
-        @if(auth()->check() && auth()->user()->role === 'student')
-            @include('student.partials.sidebar')
-        @endif
+@include('upp.partials.sidebar')
+@include('upp.partials.topbar')
+    <main class="md:ml-72 flex-1 px-5 pb-8 pt-28 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6 mb-6">
+                <div><div class="text-xs uppercase tracking-widest gold font-bold mb-2">Evaluation &amp; Records</div><h1 class="text-3xl font-extrabold text-[#002147]">Assessment Scheme Management</h1><p class="mt-2 text-slate-500">Review assessment schemes and monitor their weightage for each subject and academic session.</p></div>
+                <div class="rounded-lg border border-yellow-200 bg-yellow-50 px-4 py-3 text-sm"><strong class="text-[#002147]">Monitoring rule</strong><div class="text-slate-600">Check that total weight equals 100%.</div></div>
+            </div>
 
-        <main class="flex-1 min-w-0 bg-surface pt-20 {{ auth()->check() && auth()->user()->role === 'student' ? 'ml-72' : '' }}">
-            <div class="flex flex-col w-full">
+            @if(session('success'))<div class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-emerald-800 text-sm">{{ session('success') }}</div>@endif
+            @if(session('error'))<div class="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-red-800 text-sm">{{ session('error') }}</div>@endif
+            @if($errors->any())<div class="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-red-800 text-sm"><strong>Please fix these errors:</strong><ul class="list-disc pl-5 mt-1">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 
-            {{-- Hero --}}
-            <section class="w-full bg-gradient-to-b from-primary-container via-primary-container/95 to-primary text-on-primary relative overflow-hidden py-12 md:py-16">
-                <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-surface-tint/10 blur-3xl pointer-events-none"></div>
-                <div class="absolute left-1/3 -bottom-20 w-80 h-80 rounded-full bg-secondary/10 blur-2xl pointer-events-none"></div>
-
-                <div class="w-full max-w-[1280px] mx-auto px-6 lg:px-10 relative z-10 flex flex-col gap-8">
-                    <div class="flex flex-wrap items-center gap-2 text-xs font-label uppercase tracking-widest text-on-primary-container">
-                        <a href="{{ auth()->check() ? (auth()->user()->role === 'student' ? route('student.dashboard') : (auth()->user()->role === 'lecturer' ? route('lecturer.dashboard') : (auth()->user()->role === 'upp' ? route('upp.dashboard') : url('/')))) : url('/') }}"
-                           class="hover:text-on-primary">Laman Utama</a>
-                        <span>/</span>
-                        <span class="text-tertiary-fixed font-bold">Direktori Pensyarah</span>
-                    </div>
-
-                    <div class="max-w-3xl flex flex-col gap-3">
-                        <h1 class="font-headline font-bold text-3xl sm:text-4xl md:text-5xl text-on-primary tracking-tight leading-tight">Direktori Pensyarah</h1>
-                        <p class="font-body text-inverse-on-surface text-base md:text-lg leading-relaxed">Cari maklumat pensyarah mengikut nama atau jabatan dalam satu direktori.</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-                        <div class="bg-surface-container-lowest/10 backdrop-blur-md p-4 rounded-lg flex flex-col gap-1">
-                            <div class="flex items-center gap-2 text-tertiary-fixed">
-                                <span class="material-symbols-outlined text-xl">groups</span>
-                                <span class="font-label text-xs uppercase tracking-wider font-semibold">Jumlah Pensyarah</span>
-                            </div>
-                            <span class="font-headline font-bold text-2xl text-on-primary">86</span>
-                            <span class="text-xs text-inverse-on-surface">Rekod dalam direktori</span>
-                        </div>
-
-                        <div class="bg-surface-container-lowest/10 backdrop-blur-md p-4 rounded-lg flex flex-col gap-1">
-                            <div class="flex items-center gap-2 text-inverse-primary">
-                                <span class="material-symbols-outlined text-xl">domain</span>
-                                <span class="font-label text-xs uppercase tracking-wider font-semibold">Jabatan</span>
-                            </div>
-                            <span class="font-headline font-bold text-2xl text-on-primary">5 Jabatan</span>
-                            <span class="text-xs text-inverse-on-surface">Mengikut senarai KPMB</span>
-                        </div>
-
-                        <div class="bg-surface-container-lowest/10 backdrop-blur-md p-4 rounded-lg flex flex-col gap-1">
-                            <div class="flex items-center gap-2 text-secondary-fixed">
-                                <span class="material-symbols-outlined text-xl">search</span>
-                                <span class="font-label text-xs uppercase tracking-wider font-semibold">Carian</span>
-                            </div>
-                            <span class="font-headline font-bold text-2xl text-on-primary">Nama & Jabatan</span>
-                            <span class="text-xs text-inverse-on-surface">Cari maklumat dengan mudah</span>
-                        </div>
-
-                        <div class="bg-surface-container-lowest/10 backdrop-blur-md p-4 rounded-lg flex flex-col gap-1">
-                            <div class="flex items-center gap-2 text-tertiary-fixed">
-                                <span class="material-symbols-outlined text-xl">contact_mail</span>
-                                <span class="font-label text-xs uppercase tracking-wider font-semibold">Maklumat Hubungan</span>
-                            </div>
-                            <span class="font-headline font-bold text-2xl text-on-primary">Emel</span>
-                            <span class="text-xs text-inverse-on-surface">Hubungi melalui emel rasmi</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {{-- Filters --}}
-            <section class="w-full bg-surface-container-low py-6">
-                <div class="w-full max-w-[1280px] mx-auto px-6 lg:px-10 flex flex-col gap-4">
-                    <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="faculty-tabs">
-                        @php
-                            $departments = [
-                                'DIA' => 'Jabatan Perakaunan (DIA)',
-                                'DSC' => 'Jabatan Sains Kuantitatif (DSC)',
-                                'DLH' => 'Jabatan Landskap dan Hortikultur (DLH)',
-                                'DBS' => 'Jabatan Pengurusan Perniagaan (DBS)',
-                                'GSD' => 'Jabatan Pengajian Am (GSD)',
-                            ];
-                        @endphp
-
-                        <a href="{{ route('lecturers.index', array_filter(['search' => $search ?: null])) }}"
-                           class="px-4 py-2.5 rounded-lg text-xs font-label uppercase font-bold tracking-wide whitespace-nowrap {{ empty($department) ? 'bg-primary-container text-on-primary shadow-sm' : 'bg-surface-container-lowest text-on-surface' }}">Semua Jabatan</a>
-
-                        @foreach($departments as $code => $label)
-                            <a href="{{ route('lecturers.index', array_filter(['search' => $search ?: null, 'department' => $code])) }}"
-                               class="px-4 py-2.5 rounded-lg text-xs font-label uppercase font-bold tracking-wide whitespace-nowrap {{ ($department ?? '') === $code ? 'bg-primary-container text-on-primary shadow-sm' : 'bg-surface-container-lowest text-on-surface' }}">{{ $code }}</a>
-                        @endforeach
-                    </div>
-
-                    <form method="GET" action="{{ route('lecturers.index') }}" class="flex flex-col sm:flex-row gap-3">
-                        @if(!empty($department))
-                            <input type="hidden" name="department" value="{{ $department }}">
-                        @endif
-
-                        <div class="relative flex-1">
-                            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">search</span>
-                            <input class="w-full bg-surface-container-lowest text-on-surface text-sm rounded-lg pl-10 pr-4 py-3 placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-sm"
-                                   name="search"
-                                   value="{{ $search }}"
-                                   placeholder="Cari nama pensyarah atau jabatan..."
-                                   type="search">
-                        </div>
-
-                        <button class="px-5 py-3 rounded-lg bg-primary-container text-on-primary text-sm font-semibold shadow-sm hover:opacity-90" type="submit">Cari</button>
-
-                        @if($search || !empty($department))
-                            <a href="{{ route('lecturers.index') }}" class="px-5 py-3 rounded-lg bg-surface-container-lowest text-on-surface text-sm font-semibold text-center">Kosongkan</a>
-                        @endif
-                    </form>
-                </div>
-            </section>
-
-            {{-- Lecturer list --}}
-            <section class="w-full max-w-[1280px] mx-auto px-6 lg:px-10 py-10 md:py-12">
-                <div class="flex items-end justify-between gap-4 mb-6">
+            <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-7">
+                <div class="navy text-white p-5 flex items-center gap-3">
+                    <span aria-hidden="true" class="text-2xl text-yellow-200">◉</span>
                     <div>
-                        <h2 class="font-headline font-bold text-xl md:text-2xl text-primary tracking-tight">Senarai Pensyarah</h2>
-                        <p class="text-sm text-on-surface-variant mt-1">{{ $lecturers->count() }} rekod dijumpai</p>
+                        <h2 class="font-bold text-lg">Assessment Scheme Monitoring</h2>
+                        <p class="text-blue-100 text-sm">View schemes and monitor their status. Only the assigned Subject Coordinator can create or manage a scheme.</p>
                     </div>
-                    <span class="text-xs font-label font-bold uppercase tracking-wider bg-surface-container px-3 py-2 rounded">{{ $lecturers->count() }} dipaparkan</span>
                 </div>
-
-                @if($lecturers->count())
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($lecturers as $lecturer)
-                            <article class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col border border-outline-variant/30">
-                                <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
-                                    @if($lecturer->photo_path)
-                                        <img
-                                            src="{{ asset('storage/lecturers/' . $lecturer->photo_path) }}"
-                                            alt="Gambar {{ $lecturer->lecturer_name }}"
-                                            class="w-full h-full object-cover object-top"
-                                            loading="lazy"
-                                        >
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center">
-                                            <div class="w-24 h-24 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-3xl font-bold">
-                                                {{ mb_strtoupper(mb_substr($lecturer->lecturer_name, 0, 1)) }}
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <div class="absolute top-3 left-3 bg-primary-container/90 px-2.5 py-1 rounded text-[11px] font-label font-bold text-on-primary tracking-wide uppercase">
-                                        {{ $lecturer->position }}
-                                    </div>
-                                </div>
-
-                                <div class="p-5 flex flex-col gap-3 flex-1">
-                                    <div>
-                                        <h3 class="font-headline font-bold text-lg text-primary leading-snug">{{ $lecturer->lecturer_name }}</h3>
-                                        <p class="text-sm text-on-surface-variant mt-1">{{ $lecturer->department }}</p>
-                                    </div>
-
-                                    <div class="h-px bg-outline-variant/50"></div>
-
-                                    <div class="flex items-start gap-3 text-sm">
-                                        <span class="material-symbols-outlined text-outline text-lg">mail</span>
-                                        <a class="text-on-surface-variant hover:text-primary break-all" href="mailto:{{ $lecturer->email }}">{{ $lecturer->email }}</a>
-                                    </div>
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="rounded-xl bg-surface-container-lowest border border-outline-variant/40 p-10 text-center">
-                        <span class="material-symbols-outlined text-4xl text-outline">person_search</span>
-                        <h3 class="font-headline font-bold text-lg text-primary mt-3">Tiada pensyarah dijumpai</h3>
-                        <p class="text-sm text-on-surface-variant mt-1">Cuba kata carian lain atau pilih semua jabatan.</p>
-                        <a href="{{ route('lecturers.index') }}" class="inline-flex mt-5 px-4 py-2 rounded-lg bg-primary-container text-on-primary text-sm font-semibold">Lihat Semua Pensyarah</a>
-                    </div>
-                @endif
+                <div class="p-5 text-sm text-slate-600">
+                    UPP access is read-only on this page. You can search schemes, review assessment components and check their total weightage without changing the records.
+                </div>
             </section>
 
+            <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-slate-200"><h2 class="text-lg font-bold text-[#002147]">Existing Schemes</h2><p class="text-sm text-slate-500 mt-1">Open a scheme to review its assessment components and status.</p></div>
+                <form method="GET" action="{{ route('upp.assessment-schemes.index') }}" class="p-4 bg-slate-50 border-b grid grid-cols-1 md:grid-cols-12 gap-3">
+                    <input class="field md:col-span-7" name="search" value="{{ $search }}" placeholder="Search subject code, subject name or session">
+                    <select class="field md:col-span-3" name="status"><option value="">All statuses</option><option value="draft" @selected($status==='draft')>Draft</option><option value="active" @selected($status==='active')>Active</option><option value="archived" @selected($status==='archived')>Archived</option></select>
+                    <div class="md:col-span-2 flex gap-2"><button class="navy text-white rounded-lg px-4 py-2 text-sm font-semibold">Search</button><a class="border rounded-lg px-3 py-2 text-sm bg-white" href="{{ route('upp.assessment-schemes.index') }}">Clear</a></div>
+                </form>
+                <div class="overflow-x-auto"><table class="w-full min-w-[760px] text-sm"><thead class="navy text-white"><tr><th class="p-3 text-left">Subject</th><th class="p-3 text-left">Session</th><th class="p-3 text-center">Components</th><th class="p-3 text-center">Total Weight</th><th class="p-3 text-center">Status</th><th class="p-3 text-center">Action</th></tr></thead><tbody>
+                    @forelse($schemes as $scheme)
+                    @php($weight = (float) $scheme->assessments->sum('weight_percentage'))
+                    <tr class="border-t hover:bg-amber-50/30"><td class="p-3"><div class="font-bold text-[#002147]">{{ $scheme->subject->subject_code ?? 'Unknown subject' }}</div><div class="text-slate-500">{{ $scheme->subject->subject_name ?? '' }}</div></td><td class="p-3">{{ $scheme->academic_session }}</td><td class="p-3 text-center">{{ $scheme->assessments->count() }}</td><td class="p-3 text-center"><span class="{{ abs($weight-100) < 0.001 ? 'text-emerald-700' : 'text-amber-700' }} font-bold">{{ number_format($weight, 2) }}%</span></td><td class="p-3 text-center"><span class="inline-flex rounded-full px-3 py-1 text-xs font-bold {{ $scheme->status==='active' ? 'bg-emerald-100 text-emerald-800' : ($scheme->status==='archived' ? 'bg-slate-200 text-slate-700' : 'bg-amber-100 text-amber-800') }}">{{ ucfirst($scheme->status) }}</span></td><td class="p-3 text-center"><a class="inline-flex items-center gap-1 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold hover:bg-slate-50" href="{{ route('upp.assessment-schemes.show', $scheme->scheme_id) }}"><span aria-hidden="true" class="text-sm">◉</span> View</a></td></tr>
+                    @empty
+                    <tr><td colspan="6" class="p-8 text-center text-slate-500">No assessment schemes found.</td></tr>
+                    @endforelse
+                </tbody></table></div>
+                <div class="p-4 border-t bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm"><span class="text-slate-500">Showing {{ $schemes->firstItem() ?? 0 }}–{{ $schemes->lastItem() ?? 0 }} of {{ $schemes->total() }} schemes</span>{{ $schemes->links() }}</div>
+            </section>
         </div>
     </main>
-    </div>
-
-        @if (auth()->guest())
-            @include('layouts.partials.visitor-footer')
-        @else
-        <footer class="w-full bg-surface-container-low text-on-surface mt-8 py-6 text-center text-sm">&copy; {{ date('Y') }} Kolej Profesional MARA Beranang</footer>
-        @endif
-
-    <script>
-        // Search is submitted to Laravel so results and pagination stay consistent.
-    </script>
-
-    <script>
-        (function () {
-            // Keep the shared visitor header clock working on pages that include visitor-topbar.
-            const days = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
-            const months = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
-
-            function updateKpmbClock() {
-                const time = document.getElementById('kpmb-live-time');
-                const date = document.getElementById('kpmb-live-date');
-                if (!time && !date) return;
-
-                const now = new Date();
-                const parts = new Intl.DateTimeFormat('en-GB', {
-                    timeZone: 'Asia/Kuala_Lumpur',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hourCycle: 'h23',
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                }).formatToParts(now);
-                const get = (type) => parts.find(part => part.type === type)?.value;
-                const hours = Number(get('hour'));
-                const minutes = Number(get('minute'));
-                const seconds = Number(get('second'));
-                const day = Number(get('day'));
-                const month = Number(get('month')) - 1;
-                const year = get('year');
-                const weekday = new Intl.DateTimeFormat('en-US', {
-                    timeZone: 'Asia/Kuala_Lumpur',
-                    weekday: 'short'
-                }).format(now);
-                const weekdayIndex = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(weekday);
-
-                if (time) {
-                    const hour12 = hours % 12 || 12;
-                    time.textContent = String(hour12).padStart(2, '0') + ':' +
-                        String(minutes).padStart(2, '0') + ':' +
-                        String(seconds).padStart(2, '0') + ' ' +
-                        (hours >= 12 ? 'PM' : 'AM');
-                }
-                if (date) {
-                    date.textContent = days[weekdayIndex] + ', ' + day + ' ' + months[month] + ' ' + year;
-                }
-
-                const secondHand = document.getElementById('analog-sec-hand');
-                const minuteHand = document.getElementById('analog-min-hand');
-                const hourHand = document.getElementById('analog-hour-hand');
-                if (secondHand) secondHand.setAttribute('transform', 'rotate(' + (seconds * 6) + ' 50 50)');
-                if (minuteHand) minuteHand.setAttribute('transform', 'rotate(' + (minutes * 6 + seconds * 0.1) + ' 50 50)');
-                if (hourHand) hourHand.setAttribute('transform', 'rotate(' + ((hours % 12) * 30 + minutes * 0.5) + ' 50 50)');
-            }
-
-            updateKpmbClock();
-            window.setInterval(updateKpmbClock, 1000);
-        })();
-    </script>
+</div>
 
 </body>
-
 </html>

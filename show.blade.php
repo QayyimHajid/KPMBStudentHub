@@ -1,28 +1,138 @@
-@extends('layouts.app')
-
-@section('title', 'Student Record Details')
-
-@push('styles')
-<style>
-html,body{margin:0;padding:0;font-family:'Hanken Grotesk',sans-serif}::-webkit-scrollbar{display:none}
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Scheme Details | KPMB Student Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        /* Define the theme tokens used by the original Gaya 1 sidebar/topbar. */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00132D',
+                        'primary-container': '#082344',
+                        secondary: '#E6B422',
+                        'on-secondary': '#211700',
+                        'secondary-fixed': '#FFD75E',
+                        'secondary-container': '#E6B422',
+                        'surface-container-low': '#F5F3F2',
+                        'surface-container-lowest': '#FFFFFF',
+                        'surface-container-highest': '#DCE2EA',
+                        'on-primary': '#F8FAFC'
+                    },
+                    fontFamily: {
+                        headline: ['Hanken Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0,1&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .navy { background: #00132D; }
+        .field { width: 100%; border: 1px solid #c4c6cf; border-radius: .5rem; padding: .65rem .75rem; background: white; }
+        .sidebar { background: #00132D; color: #f8fafc; }
+        .topbar { background: rgba(255,255,255,.94); }
+        .upp-sidebar-nav { scrollbar-width: thin; scrollbar-color: rgba(148,163,184,.45) transparent; }
+        .upp-sidebar-nav::-webkit-scrollbar { width: 5px; }
+        .upp-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .upp-sidebar-nav::-webkit-scrollbar-thumb { background: rgba(148,163,184,.35); border-radius: 9999px; }
+        .upp-sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(203,213,225,.65); }
+        @media (max-width: 767px) {
+            .sidebar { width: 17rem; }
+            .topbar { left: 0; }
+        }
+    
+        .sidebar { background-color:#00132D !important; color:#F8FAFC !important; }
+        .sidebar .text-white { color:#fff !important; }
+        .sidebar .text-slate-200 { color:#e2e8f0 !important; }
+        .sidebar .text-slate-300 { color:#cbd5e1 !important; }
+        .sidebar .text-slate-400 { color:#94a3b8 !important; }
+        .sidebar .text-secondary-fixed { color:#FFD75E !important; }
+        .sidebar > div:first-child > div:first-child { background-color:rgba(8,35,68,.75) !important; }
+        .topbar { background:rgba(255,255,255,.96) !important; color:#0f172a; }
+        .material-symbols-outlined { font-family:'Material Symbols Outlined'; font-weight:normal; font-style:normal; font-size:24px; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:'liga'; -webkit-font-smoothing:antialiased; }
 </style>
-@endpush
+</head>
+<body class="bg-[#fcf9f8] text-slate-800 min-h-screen">
+@php
+    $userName = auth()->user()->name ?? 'Pegawai UPP';
+    $displaySession = $academicSession ?? $currentAcademicSession ?? 'Sesi akademik belum ditetapkan';
 
-@section('content')
-<nav class="flex items-center gap-2"><a href="{{ route('lecturer.dashboard') }}" class="text-xs text-on-surface-variant hover:text-primary">Faculty Portal</a><span class="material-symbols-outlined text-sm text-outline">chevron_right</span><a href="{{ route('lecturer.student-records.index') }}" class="text-xs text-on-surface-variant hover:text-primary">Student Records</a><span class="material-symbols-outlined text-sm text-outline">chevron_right</span><span class="text-xs text-primary font-semibold bg-surface-container px-2 py-0.5 rounded">Student Details</span></nav>
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div class="flex items-center gap-3.5"><div class="w-12 h-12 rounded-xl bg-primary-container text-white flex items-center justify-center"><span class="material-symbols-outlined text-3xl">person</span></div><div><h1 class="text-2xl font-bold text-primary tracking-tight">Student Record Details</h1><p class="font-body text-sm text-on-surface-variant">View this student’s profile, registrations, recorded marks and academic results.</p></div></div><a href="{{ route('lecturer.student-records.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-outline-variant/40 text-primary hover:bg-surface-container-low text-sm font-semibold"><span class="material-symbols-outlined">arrow_back</span>Back to Student Records</a></div>
-<div class="bg-white border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden"><div class="p-6 bg-surface-container-low border-b border-outline-variant/20 flex flex-col sm:flex-row sm:items-center gap-4"><div class="w-16 h-16 rounded-full bg-primary text-secondary-fixed flex items-center justify-center text-2xl font-bold">{{ strtoupper(substr($student->student_name ?? 'S',0,1)) }}</div><div class="flex-1"><h2 class="text-xl font-bold text-primary">{{ $student->student_name }}</h2><p class="text-sm text-on-surface-variant mt-1">{{ $student->student_id }}</p></div><span class="inline-flex w-fit px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant/30 text-xs font-semibold">Semester {{ $student->semester ?? '—' }}</span></div>
-<div class="p-6"><h3 class="text-base font-bold text-primary mb-4">Personal &amp; Academic Information</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Student ID</span><span class="font-semibold text-sm">{{ $student->student_id }}</span></div>
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Full Name</span><span class="font-semibold text-sm">{{ $student->student_name }}</span></div>
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Programme</span><span class="font-semibold text-sm">{{ $student->programme ?? '—' }}</span></div>
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Semester</span><span class="font-semibold text-sm">{{ $student->semester ?? '—' }}</span></div>
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Email</span><span class="font-semibold text-sm break-words">{{ $student->email ?? $student->user?->email ?? '—' }}</span></div>
-<div class="p-4 rounded-lg bg-surface-container-low"><span class="block text-xs text-outline mb-1">Phone Number</span><span class="font-semibold text-sm">{{ $student->phone_number ?? '—' }}</span></div>
-</div></div></div>
-<div class="bg-white rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden"><div class="p-5 border-b border-outline-variant/30"><h2 class="text-lg font-bold text-primary">Registered Subjects</h2><p class="text-xs text-on-surface-variant mt-1">Subject registration records across the student’s academic history.</p></div><div class="overflow-x-auto"><table class="w-full text-left"><thead class="bg-surface-container-low text-xs uppercase tracking-wider text-on-surface-variant"><tr><th class="px-6 py-4">Subject Code</th><th class="px-6 py-4">Subject Name</th><th class="px-6 py-4">Semester</th><th class="px-6 py-4">Registration Status</th></tr></thead><tbody class="divide-y divide-outline-variant/20 text-sm">@forelse($student->subjectRegistrations as $registration)<tr><td class="px-6 py-4 font-mono font-semibold text-primary">{{ $registration->subject->subject_code ?? '—' }}</td><td class="px-6 py-4">{{ $registration->subject->subject_name ?? '—' }}</td>
-<td class="px-6 py-4">{{ $registration->semester ?? $registration->classModel->semester ?? '—' }}</td><td class="px-6 py-4"><span class="px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold">{{ ucfirst($registration->registration_status ?? 'approved') }}</span></td></tr>@empty<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No subject registration records are available for this student.</td></tr>@endforelse</tbody></table></div></div>
-<div class="bg-white rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden"><div class="p-5 border-b border-outline-variant/30"><h2 class="text-lg font-bold text-primary">Recorded Marks</h2><p class="text-xs text-on-surface-variant mt-1">Recorded marks available for this student.</p></div><div class="overflow-x-auto"><table class="w-full text-left"><thead class="bg-surface-container-low text-xs uppercase tracking-wider text-on-surface-variant"><tr><th class="px-6 py-4">Subject</th><th class="px-6 py-4">Assessment</th><th class="px-6 py-4">Marks</th><th class="px-6 py-4">Recorded At</th></tr></thead><tbody class="divide-y divide-outline-variant/20 text-sm">@forelse($student->studentMarks as $mark)<tr><td class="px-6 py-4">{{ $mark->subject->subject_code ?? '—' }} — {{ $mark->subject->subject_name ?? 'Subject' }}</td><td class="px-6 py-4">{{ $mark->assessment_name ?? $mark->assessment_type ?? 'Recorded mark' }}</td><td class="px-6 py-4 font-semibold">{{ $mark->marks ?? '—' }}</td><td class="px-6 py-4 text-on-surface-variant">{{ $mark->updated_at?->format('d M Y') ?? '—' }}</td></tr>@empty<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No recorded marks are available for this student.</td></tr>@endforelse</tbody></table></div></div>
-<div class="bg-white rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden"><div class="p-5 border-b border-outline-variant/30"><h2 class="text-lg font-bold text-primary">Academic Results</h2><p class="text-xs text-on-surface-variant mt-1">Available result records for this student.</p></div><div class="overflow-x-auto"><table class="w-full text-left"><thead class="bg-surface-container-low text-xs uppercase tracking-wider text-on-surface-variant"><tr><th class="px-6 py-4">Subject</th><th class="px-6 py-4">Semester</th><th class="px-6 py-4">Academic Session</th><th class="px-6 py-4">Grade</th><th class="px-6 py-4">Grade Point</th></tr></thead><tbody class="divide-y divide-outline-variant/20 text-sm">@forelse($student->academicResults as $result)<tr><td class="px-6 py-4">{{ $result->subject->subject_code ?? $result->subject_code ?? '—' }} {{ $result->subject->subject_name ?? '' }}</td><td class="px-6 py-4">{{ $result->semester ?? '—' }}</td><td class="px-6 py-4">{{ $result->academic_session ?? '—' }}</td><td class="px-6 py-4 font-semibold">{{ $result->grade ?? '—' }}</td><td class="px-6 py-4">{{ $result->grade_point ?? '—' }}</td></tr>@empty<tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant">No academic result records available.</td></tr>@endforelse</tbody></table></div></div>
-<footer class="text-center text-xs text-outline py-2">KPMB Student Hub · Lecturer Portal</footer>
-@endsection
+    $uppSidebarGroups = [
+        [
+            'label' => 'PENGURUSAN UTAMA',
+            'items' => [
+                ['label' => 'Dashboard UPP', 'icon' => 'dashboard', 'url' => '/upp/dashboard', 'patterns' => ['upp/dashboard']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN PELAJAR & PENSYARAH',
+            'items' => [
+                ['label' => 'Pengurusan Pelajar', 'icon' => 'groups', 'url' => '/upp/students', 'patterns' => ['upp/students*']],
+                ['label' => 'Pengurusan Pensyarah', 'icon' => 'badge', 'url' => '/upp/lecturers', 'patterns' => ['upp/lecturers*']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN AKADEMIK',
+            'items' => [
+                ['label' => 'Pengurusan Subjek', 'icon' => 'menu_book', 'url' => '/upp/subjects', 'patterns' => ['upp/subjects*']],
+                ['label' => 'Pengurusan Kelas', 'icon' => 'meeting_room', 'url' => '/upp/classes', 'patterns' => ['upp/classes*']],
+                ['label' => 'Skim Penilaian', 'icon' => 'fact_check', 'url' => '/upp/assessment-schemes', 'patterns' => ['upp/assessment-schemes*']],
+            ],
+        ],
+        [
+            'label' => 'PENDAFTARAN & PEMANTAUAN',
+            'items' => [
+                ['label' => 'Pemantauan Pendaftaran', 'icon' => 'how_to_reg', 'url' => '/upp/subject-registrations', 'patterns' => ['upp/subject-registrations*']],
+                ['label' => 'Laporan Pendaftaran', 'icon' => 'summarize', 'url' => '/upp/registration-report', 'patterns' => ['upp/registration-report*']],
+            ],
+        ],
+        [
+            'label' => 'KEPUTUSAN & LAPORAN',
+            'items' => [
+                ['label' => 'Laporan Keputusan', 'icon' => 'analytics', 'url' => '/upp/result-report', 'patterns' => ['upp/result-report*']],
+            ],
+        ],
+    ];
+@endphp
+
+@include('upp.partials.sidebar')
+@include('upp.partials.topbar')
+
+<div class="ml-0 md:ml-72 max-w-5xl mx-auto px-5 pb-8 pt-24 md:px-8 md:pt-28">
+    <a href="{{ route('upp.assessment-schemes.index') }}" class="text-sm text-[#002147] font-semibold hover:underline">← Kembali ke Skim Penilaian</a>
+    <header class="mt-5 mb-6 pb-5 border-b border-slate-200 flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div><div class="text-xs uppercase tracking-widest text-amber-700 font-bold">Skim Penilaian #{{ $scheme->scheme_id }}</div><h1 class="text-3xl font-extrabold text-[#002147] mt-2">{{ $scheme->subject->subject_code ?? 'Subject' }} — {{ $scheme->subject->subject_name ?? '' }}</h1><p class="text-slate-500 mt-2">Sesi akademik: <strong>{{ $scheme->academic_session }}</strong></p></div>
+        <span class="rounded-full px-4 py-2 text-sm font-bold {{ $scheme->status==='active' ? 'bg-emerald-100 text-emerald-800' : ($scheme->status==='archived' ? 'bg-slate-200 text-slate-700' : 'bg-amber-100 text-amber-800') }}">{{ ucfirst($scheme->status) }}</span>
+    </header>
+
+    @php($totalWeight = (float) $scheme->assessments->sum('weight_percentage'))
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white border rounded-xl p-5"><div class="text-xs uppercase tracking-wider text-slate-500">Komponen</div><div class="text-3xl font-extrabold text-[#002147] mt-2">{{ $scheme->assessments->count() }}</div></div>
+        <div class="bg-white border rounded-xl p-5"><div class="text-xs uppercase tracking-wider text-slate-500">Jumlah Wajaran</div><div class="text-3xl font-extrabold mt-2 {{ abs($totalWeight-100)<0.001 ? 'text-emerald-700' : 'text-amber-700' }}">{{ number_format($totalWeight,2) }}%</div></div>
+        <div class="bg-white border rounded-xl p-5"><div class="text-xs uppercase tracking-wider text-slate-500">Markah Direkodkan</div><div class="text-3xl font-extrabold text-[#002147] mt-2">{{ $scheme->assessments->sum(fn($assessment) => $assessment->marks->count()) }}</div></div>
+    </section>
+
+    <section class="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
+        <div class="navy text-white p-4 font-bold">Assessment Komponen</div>
+        <div class="overflow-x-auto"><table class="w-full min-w-[700px] text-sm"><thead class="bg-slate-50"><tr><th class="p-3 text-left">#</th><th class="p-3 text-left">Penilaian</th><th class="p-3 text-left">Kategori</th><th class="p-3 text-right">Markah Maksimum</th><th class="p-3 text-right">Wajaran</th><th class="p-3 text-left">Penerangan</th></tr></thead><tbody>
+        @forelse($scheme->assessments as $assessment)
+            <tr class="border-t"><td class="p-3">{{ $assessment->sort_order }}</td><td class="p-3 font-semibold">{{ $assessment->assessment_name }}</td><td class="p-3"><span class="inline-flex rounded-full px-2 py-1 text-xs font-bold {{ ($assessment->assessment_type ?? 'PB') === 'PA' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800' }}">{{ $assessment->assessment_type ?? 'PB' }}</span></td><td class="p-3 text-right">{{ number_format((float)$assessment->max_marks,2) }}</td><td class="p-3 text-right font-bold">{{ number_format((float)$assessment->weight_percentage,2) }}%</td><td class="p-3 text-slate-500">{{ $assessment->description ?: '—' }}</td></tr>
+        @empty
+            <tr><td colspan="6" class="p-6 text-center text-slate-500">Tiada komponen penilaian ditambah.</td></tr>
+        @endforelse
+        </tbody></table></div>
+        @if($scheme->notes)<div class="border-t p-4 text-sm"><strong>Catatan:</strong> {{ $scheme->notes }}</div>@endif
+    </section>
+
+    <section class="bg-white border rounded-xl p-5 mb-6">
+        <h2 class="text-lg font-bold text-[#002147] mb-1">Semakan UPP</h2>
+        <p class="text-sm text-slate-600">Halaman ini untuk pemantauan sahaja. Perubahan skim penilaian, pengaktifan dan pengarkiban hanya boleh dilakukan oleh Penyelaras Subjek yang ditugaskan kepada subjek ini.</p>
+    </section>
+</div>
+
+</body></html>
