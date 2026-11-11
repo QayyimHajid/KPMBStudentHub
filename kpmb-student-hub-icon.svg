@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">KPMB Student Hub</title>
+  <rect x="2" y="2" width="124" height="124" rx="24" fill="#002147"/>
+  <path d="M18 46 64 22l46 24-46 24L18 46Z" fill="none" stroke="#FED65B" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M38 58v25c15 13 37 13 52 0V58" fill="none" stroke="#FED65B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M110 47v29" fill="none" stroke="#FED65B" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="110" cy="83" r="5" fill="#FED65B"/>
+  <path d="M64 70v17" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+</svg>
