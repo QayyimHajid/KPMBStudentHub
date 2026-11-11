@@ -1,182 +1,161 @@
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en" style=""><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary-container": "#745c00", "on-secondary": "#ffffff", "inverse-surface": "#313030", "tertiary": "#070b0f", "on-surface-variant": "#44474e", "primary-container": "#002147", "secondary-fixed": "#ffe088", "on-tertiary-fixed": "#181c20", "on-background": "#1c1b1b", "surface-container-low": "#f6f3f2", "surface-container-high": "#eae7e7", "on-primary": "#ffffff", "on-primary-fixed-variant": "#2d476f", "inverse-primary": "#aec7f6", "on-tertiary-fixed-variant": "#43474b", "tertiary-container": "#1e2226", "surface-variant": "#e5e2e1", "on-error": "#ffffff", "outline-variant": "#c4c6cf", "error": "#ba1a1a", "on-error-container": "#93000a", "secondary-fixed-dim": "#e9c349", "on-tertiary-container": "#85898e", "tertiary-fixed-dim": "#c3c7cc", "surface": "#fcf9f8", "surface-dim": "#dcd9d9", "surface-bright": "#fcf9f8", "primary-fixed-dim": "#aec7f6", "primary": "#000a1e", "on-secondary-fixed-variant": "#574500", "surface-tint": "#465f88", "on-primary-container": "#708ab5", "surface-container-highest": "#e5e2e1", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#241a00", "surface-container": "#f0eded", "primary-fixed": "#d6e3ff", "secondary-container": "#fed65b", "secondary": "#735c00", "on-surface": "#1c1b1b", "on-tertiary": "#ffffff", "tertiary-fixed": "#e0e3e8", "on-primary-fixed": "#001b3d", "inverse-on-surface": "#f3f0ef", "background": "#fcf9f8", "error-container": "#ffdad6", "outline": "#74777f" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": {}, "fontFamily": { "headline": [ "Hanken Grotesk" ], "display": [ "Hanken Grotesk" ], "body": [ "\"Source Serif 4\"" ], "label": [ "Hanken Grotesk" ] }, "fontSize": {} } } }</script></head><body class="bg-surface font-body text-on-surface min-h-screen">@php
+    $userName = auth()->user()->name ?? 'Pegawai UPP';
+    $displaySession = $academicSession ?? $currentAcademicSession ?? 'Sesi akademik belum ditetapkan';
 
-    <title>@yield('title', 'KPMB Student Hub')</title>
+    $uppSidebarGroups = [
+        [
+            'label' => 'PENGURUSAN UTAMA',
+            'items' => [
+                ['label' => 'Dashboard UPP', 'icon' => 'dashboard', 'url' => '/upp/dashboard', 'patterns' => ['upp/dashboard']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN PELAJAR & PENSYARAH',
+            'items' => [
+                ['label' => 'Pengurusan Pelajar', 'icon' => 'groups', 'url' => '/upp/students', 'patterns' => ['upp/students*']],
+                ['label' => 'Pengurusan Pensyarah', 'icon' => 'badge', 'url' => '/upp/lecturers', 'patterns' => ['upp/lecturers*']],
+            ],
+        ],
+        [
+            'label' => 'PENGURUSAN AKADEMIK',
+            'items' => [
+                ['label' => 'Pengurusan Subjek', 'icon' => 'menu_book', 'url' => '/upp/subjects', 'patterns' => ['upp/subjects*']],
+                ['label' => 'Pengurusan Kelas', 'icon' => 'meeting_room', 'url' => '/upp/classes', 'patterns' => ['upp/classes*']],
+                ['label' => 'Skim Penilaian', 'icon' => 'fact_check', 'url' => '/upp/assessment-schemes', 'patterns' => ['upp/assessment-schemes*']],
+            ],
+        ],
+        [
+            'label' => 'PENDAFTARAN & PEMANTAUAN',
+            'items' => [
+                ['label' => 'Pemantauan Pendaftaran', 'icon' => 'how_to_reg', 'url' => '/upp/subject-registrations', 'patterns' => ['upp/subject-registrations*']],
+                ['label' => 'Laporan Pendaftaran', 'icon' => 'summarize', 'url' => '/upp/registration-report', 'patterns' => ['upp/registration-report*']],
+            ],
+        ],
+        [
+            'label' => 'KEPUTUSAN & LAPORAN',
+            'items' => [
+                ['label' => 'Laporan Keputusan', 'icon' => 'analytics', 'url' => '/upp/result-report', 'patterns' => ['upp/result-report*']],
+            ],
+        ],
+    ];
+@endphp
 
-    {{-- Fonts --}}
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&family=Source+Serif+4:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
-    {{-- Tailwind CSS --}}
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#002147",
-                        "primary-dark": "#001633",
-                        "primary-light": "#0a356c",
-                        secondary: "#f59e0b",
-                        "secondary-dark": "#b45309",
-                        "secondary-light": "#fef3c7",
-                        "mara-red": "#dc2626",
-                        "mara-red-light": "#fee2e2",
-                        "tvet-cyan": "#0284c7",
-                        "tvet-emerald": "#059669",
-                        surface: "#f8fafc",
-                        "surface-card": "#ffffff",
-                        "surface-muted": "#f1f5f9",
-                        "border-subtle": "#e2e8f0",
-                        "text-main": "#0f172a",
-                        "text-muted": "#64748b"
-                    },
-                    fontFamily: {
-                        sans: ["'Hanken Grotesk'", "sans-serif"],
-                        serif: ["'Source Serif 4'", "serif"]
-                    }
-                }
-            }
-        };
-    </script>
-
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            min-width: 320px;
-            background: #f8fafc;
-            color: #0f172a;
-            font-family: 'Hanken Grotesk', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            line-height: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-        }
-
-        img, svg {
-            max-width: 100%;
-        }
-
-        /*
-         * Sidebar is fixed at 18rem on desktop.
-         * The content wrapper must occupy the remaining width, not add
-         * 18rem padding to an already 100%-wide element.
-         */
-        .student-main {
-            margin-left: 18rem;
-            padding-left: 0;
-            width: calc(100% - 18rem);
-            max-width: calc(100% - 18rem);
-            min-width: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: clip;
-        }
-
-        .student-main > header,
-        .student-main > main {
-            width: 100%;
-            max-width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-
-        .student-main > main {
-            overflow-x: clip;
-        }
-
-        .student-main img,
-        .student-main svg,
-        .student-main video,
-        .student-main iframe,
-        .student-main canvas {
-            max-width: 100%;
-        }
-
-        .student-main .grid,
-        .student-main .grid > *,
-        .student-main .flex > * {
-            min-width: 0;
-        }
-
-        @media (max-width: 1023px) and (min-width: 768px) {
-            aside.student-sidebar {
-                width: 16rem;
-            }
-
-            .student-main {
-                margin-left: 16rem;
-                width: calc(100% - 16rem);
-                max-width: calc(100% - 16rem);
-                padding-left: 0;
-            }
-        }
-
-        @media (max-width: 767px) {
-            aside.student-sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                min-height: auto;
-                max-height: none;
-            }
-
-            .student-main {
-                margin-left: 0;
-                width: 100%;
-                max-width: 100%;
-                padding-left: 0;
-                min-height: auto;
-            }
-
-            .student-main > header {
-                position: relative;
-                flex-wrap: wrap;
-                padding: 1rem;
-            }
-
-            .student-main > main {
-                padding: 1rem;
-            }
-        }
-    </style>
-
-    @stack('styles')
-</head>
-
-<body class="bg-surface font-sans text-text-main antialiased">
-    @include('student.partials.sidebar')
-
-    <div class="student-main">
-        @include('student.partials.topbar')
-
-        <main class="w-full flex-1 p-5 md:p-8">
-            @yield('content')
-        </main>
-    </div>
-
-    @stack('scripts')
-</body>
-</html>
+@include('upp.partials.sidebar')<div class="pl-72 flex flex-col min-h-screen">@include('upp.partials.topbar')<main class="w-full pt-16 bg-surface flex-1 px-8 py-8">
+<div class="flex flex-col w-full gap-6">
+@if (session('success'))<div class="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">{{ session('success') }}</div>@endif
+@if (session('error'))<div class="rounded-xl bg-error-container px-4 py-3 text-sm text-on-error-container">{{ session('error') }}</div>@endif
+@if ($errors->any())<div class="rounded-xl bg-error-container px-4 py-3 text-sm text-on-error-container"><strong>Please check the information entered.</strong><ul class="list-disc ml-5 mt-1">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+<section class="relative w-full rounded-2xl bg-surface-container-lowest p-6 shadow-sm overflow-hidden">
+<div class="absolute -right-16 -top-20 w-80 h-80 rounded-full bg-secondary-container/15 blur-3xl pointer-events-none"></div><div class="absolute right-1/3 bottom-0 w-64 h-32 rounded-full bg-primary-fixed/20 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6 pb-6">
+<div class="flex flex-col gap-1 max-w-2xl"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-label font-bold uppercase tracking-wider bg-secondary/10 text-secondary"><span class="w-2 h-2 rounded-full bg-secondary pulse-beacon"></span>UPP Registry</span><span class="text-xs font-label text-on-surface-variant font-medium">Student information management</span></div>
+<h1 class="text-2xl lg:text-3xl font-display font-bold text-primary tracking-tight mt-1">Manage Student Records</h1><p class="text-sm font-body text-on-surface-variant leading-relaxed">View, search, add, and maintain student roster records from one central page.</p></div>
+<button type="button" id="btn-open-student" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label text-xs font-semibold shadow-sm transition-all hover:shadow"><span class="material-symbols-outlined text-base">person_add</span>Add New Student</button></div>
+<div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-surface-container-high/60">
+<div class="p-3.5 rounded-xl bg-surface-container-low/70"><div class="flex items-center justify-between"><span class="text-xs font-label font-semibold text-on-surface-variant">Total Student Records</span><span class="material-symbols-outlined text-primary text-lg">groups</span></div><div class="mt-2 text-2xl font-headline font-bold text-primary">{{ $students->total() }}</div><div class="text-[11px] text-on-surface-variant mt-1">Records in the roster</div></div>
+<div class="p-3.5 rounded-xl bg-surface-container-low/70"><div class="flex items-center justify-between"><span class="text-xs font-label font-semibold text-on-surface-variant">Displayed on This Page</span><span class="material-symbols-outlined text-secondary text-lg">list_alt</span></div><div class="mt-2 text-2xl font-headline font-bold text-primary">{{ $students->count() }}</div><div class="text-[11px] text-on-surface-variant mt-1">Current page results</div></div>
+<div class="p-3.5 rounded-xl bg-surface-container-low/70"><div class="flex items-center justify-between"><span class="text-xs font-label font-semibold text-on-surface-variant">Current Page</span><span class="material-symbols-outlined text-secondary text-lg">auto_stories</span></div><div class="mt-2 text-2xl font-headline font-bold text-primary">{{ $students->currentPage() }}</div><div class="text-[11px] text-on-surface-variant mt-1">Of {{ $students->lastPage() }} page(s)</div></div>
+</div></section>
+<div class="flex flex-col gap-4 w-full">
+<div class="rounded-xl bg-surface-container-lowest p-3 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3"><div><h2 class="font-headline font-bold text-base text-primary">Student Roster</h2><p class="text-xs font-body text-on-surface-variant mt-0.5">Search records by student ID or student name.</p></div>
+<form action="{{ route('upp.students.index') }}" method="GET" class="flex flex-col lg:flex-row items-stretch lg:items-center gap-2 w-full lg:w-auto">
+<div class="relative w-full lg:w-64"><span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant text-lg">search</span><input name="search" value="{{ $search }}" class="w-full pl-9 pr-3 py-2.5 bg-surface-container-low rounded-lg text-xs font-label text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search Student ID or name..." type="text"></div>
+<select name="programme" class="w-full lg:w-52 px-3 py-2.5 bg-surface-container-low rounded-lg text-xs font-label text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+<option value="">All Programmes</option>
+@foreach ($programmes as $programmeOption)
+<option value="{{ $programmeOption->programme_name }}" @selected($programme === $programmeOption->programme_name)>{{ $programmeOption->programme_code }} — {{ $programmeOption->programme_name }}</option>
+@endforeach
+</select>
+<select name="semester" class="w-full lg:w-36 px-3 py-2.5 bg-surface-container-low rounded-lg text-xs font-label text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+<option value="">All Semesters</option>
+@foreach ($semesters as $semesterOption)
+<option value="{{ $semesterOption }}" @selected((string) $semester === (string) $semesterOption)>Semester {{ $semesterOption }}</option>
+@endforeach
+</select>
+<div class="flex items-center gap-2"><button type="submit" class="px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label text-xs font-semibold hover:bg-primary-container">Filter</button><a href="{{ route('upp.students.index') }}" class="px-4 py-2.5 rounded-lg bg-surface-container-high text-primary font-label text-xs font-semibold hover:bg-surface-container-highest">Clear</a></div>
+</form></div>
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden"><div class="overflow-x-auto"><table class="w-full min-w-[900px] text-left"><thead><tr class="bg-surface-container-low/70 text-[11px] font-label font-bold uppercase tracking-wider text-on-surface-variant"><th class="py-3 px-4">Student ID</th><th class="py-3 px-4">Student Name</th><th class="py-3 px-4">Programme</th><th class="py-3 px-3 text-center">Semester</th><th class="py-3 px-4">Account Status</th><th class="py-3 px-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-surface-container-high/40 text-xs font-label">
+@forelse ($students as $student)
+<tr class="hover:bg-surface-container-low/50 transition-colors"><td class="py-4 px-4 whitespace-nowrap"><span class="font-mono font-bold text-primary">{{ $student->student_id }}</span></td><td class="py-4 px-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">@if ($student->student?->profile_picture)<img src="{{ asset('storage/' . $student->student->profile_picture) }}" alt="Profile picture" class="w-full h-full object-cover">@else{{ strtoupper(substr($student->student_name, 0, 1)) }}@endif</div><span class="font-headline font-bold text-primary">{{ $student->student_name }}</span></div></td><td class="py-4 px-4 text-on-surface">{{ $student->programme }}</td><td class="py-4 px-3 text-center"><span class="inline-flex items-center justify-center rounded-md bg-surface-container px-2 py-1 font-bold text-primary">{{ $student->semester }}</span></td><td class="py-4 px-4">@if ($student->student)<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Registered</span>@else<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-surface-container text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-outline"></span>Not Registered</span>@endif</td><td class="py-4 px-4 text-right whitespace-nowrap"><div class="inline-flex items-center gap-1"><a href="{{ route('upp.students.edit', $student->student_id) }}" class="p-2 rounded-lg text-primary hover:bg-primary hover:text-on-primary transition-all" title="Edit student"><span class="material-symbols-outlined text-base">edit</span><span class="sr-only">Edit</span></a><form action="{{ route('upp.students.destroy', $student->student_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student roster record?');">@csrf @method('DELETE')<button type="submit" class="p-2 rounded-lg text-error hover:bg-error-container transition-all" title="Delete student"><span class="material-symbols-outlined text-base">delete</span><span class="sr-only">Delete</span></button></form></div>@if ($student->student)
+<button type="button" class="mt-2 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container text-[11px] font-semibold transition-colors"
+    data-open-mentor data-student-id="{{ $student->student_id }}" data-student-name="{{ $student->student_name }}"
+    data-current-mentor="{{ $student->student->currentMentorAssignment?->lecturerDirectory?->lecturer_name ?? '' }}"
+    data-action="{{ route('upp.students.assign-mentor', $student->student_id) }}">
+    <span class="material-symbols-outlined text-sm">manage_accounts</span>
+    {{ $student->student->currentMentorAssignment?->lecturerDirectory?->lecturer_name ? 'Change Mentor' : 'Assign Mentor' }}
+</button>
+@endif</td></tr>
+@empty<tr><td colspan="6" class="px-4 py-14 text-center"><span class="material-symbols-outlined text-3xl text-on-surface-variant">person_search</span><p class="mt-2 font-headline font-bold text-primary">No student records found</p><p class="text-xs text-on-surface-variant mt-1">Try another search term or add a new student record.</p></td></tr>@endforelse
+</tbody></table></div><div class="p-3 bg-surface-container-low/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-label text-on-surface-variant"><span>Showing {{ $students->firstItem() ?? 0 }}–{{ $students->lastItem() ?? 0 }} of {{ $students->total() }} student records</span><div>{{ $students->appends(request()->query())->links() }}</div></div></div>
+</div><div class="flex items-center justify-between gap-3 text-[11px] font-label text-on-surface-variant"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-secondary">info</span>Changes made here apply to student roster records.</span><a href="{{ route('upp.dashboard') }}" class="inline-flex items-center gap-1 font-semibold text-primary hover:text-secondary"><span class="material-symbols-outlined text-sm">arrow_back</span>Back to UPP Dashboard</a></div>
+</div></main><footer class="w-full bg-surface-container-low py-5 px-8"><div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-label text-on-surface-variant"><span>© {{ date('Y') }} KPMB Student Hub · UPP Registry</span><a href="{{ route('upp.dashboard') }}" class="inline-flex items-center gap-1 font-semibold text-primary hover:text-secondary"><span class="material-symbols-outlined text-sm">arrow_back</span>Back to UPP Dashboard</a></div></footer>
+<div id="mentor-modal-backdrop" class="fixed inset-0 z-[70] hidden items-center justify-center bg-primary/40 backdrop-blur-sm p-4" aria-hidden="true">
+<section role="dialog" aria-modal="true" aria-labelledby="mentor-modal-title" class="w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-2xl bg-surface-container-lowest shadow-2xl border border-surface-container-high/70 flex flex-col">
+<div class="relative px-6 py-5 border-b border-surface-container-high/60">
+<div class="flex items-start justify-between gap-4"><div class="flex gap-3"><div class="w-11 h-11 rounded-xl bg-primary text-on-primary flex items-center justify-center"><span class="material-symbols-outlined">supervisor_account</span></div><div><h2 id="mentor-modal-title" class="font-headline text-xl font-bold text-primary">Assign Academic Mentor</h2><p class="mt-1 text-xs text-on-surface-variant">Search the lecturer directory and select one mentor for this student.</p></div></div><button type="button" id="mentor-modal-close" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined">close</span></button></div>
+<div class="mt-4 rounded-xl bg-surface-container-low p-4"><p class="text-[10px] font-label font-bold uppercase tracking-wider text-on-surface-variant">Selected Student</p><p id="mentor-student-name" class="font-headline font-bold text-primary">Student name</p><p id="mentor-student-id" class="text-xs font-label text-on-surface-variant">Student ID</p><p class="mt-2 text-xs text-on-surface-variant">Current mentor: <strong id="mentor-current-name">Not assigned</strong></p></div>
+</div>
+<form id="mentor-assignment-form" method="POST" class="flex min-h-0 flex-1 flex-col">@csrf
+<input type="hidden" name="search" value="{{ $search }}"><input type="hidden" name="lecturer_directory_id" id="mentor-selected-id" value="">
+<div class="px-6 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-[1fr_220px] gap-3">
+<label class="relative block"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span><input id="mentor-search" type="search" autocomplete="off" placeholder="Search lecturer by name, email or position..." class="w-full rounded-lg border border-outline-variant/70 bg-surface px-10 py-3 text-xs font-label focus:outline-none focus:ring-2 focus:ring-primary/20"></label>
+<label class="relative block"><span class="sr-only">Filter by department</span><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">domain</span><select id="mentor-department-filter" class="w-full appearance-none rounded-lg border border-outline-variant/70 bg-surface py-3 pl-10 pr-8 text-xs font-label text-primary"><option value="">All departments</option>@foreach ($lecturerDirectory->pluck('department')->filter()->unique()->sort() as $department)<option value="{{ mb_strtolower($department) }}">{{ $department }}</option>@endforeach</select></label>
+</div>
+<div class="px-6 pb-3 flex items-center justify-between"><p class="text-[11px] font-label text-on-surface-variant"><span id="mentor-result-count">{{ $lecturerDirectory->count() }}</span> lecturer(s) found</p><button type="button" id="mentor-clear-filters" class="text-[11px] font-label font-semibold text-primary">Clear filters</button></div>
+<div id="mentor-list" class="mx-6 mb-4 min-h-0 flex-1 overflow-y-auto rounded-xl border border-surface-container-high divide-y divide-surface-container-high/70">
+@foreach ($lecturerDirectory as $directoryLecturer)
+<button type="button" class="mentor-option w-full p-3 sm:p-4 flex items-center gap-3 text-left hover:bg-surface-container-low/80 focus:outline-none transition-colors" data-lecturer-id="{{ $directoryLecturer->id }}" data-name="{{ mb_strtolower($directoryLecturer->lecturer_name) }}" data-email="{{ mb_strtolower($directoryLecturer->email) }}" data-position="{{ mb_strtolower($directoryLecturer->position ?? '') }}" data-department="{{ mb_strtolower($directoryLecturer->department ?? '') }}" aria-pressed="false">
+<span class="mentor-radio w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center shrink-0"><span class="hidden w-2.5 h-2.5 rounded-full bg-primary"></span></span>
+<span class="w-12 h-12 rounded-full overflow-hidden bg-primary-fixed text-primary flex items-center justify-center shrink-0 border border-surface-container-high"> @if (!empty($directoryLecturer->photo_path)) <img src="{{ asset('storage/lecturers/' . $directoryLecturer->photo_path) }}" alt="{{ $directoryLecturer->lecturer_name }}" class="w-full h-full object-cover" onerror="this.onerror=null; this.style.display='none';" > @else <span class="material-symbols-outlined">person</span> @endif </span>
+<span class="min-w-0 flex-1"><span class="block font-headline font-bold text-sm text-primary truncate">{{ $directoryLecturer->lecturer_name }}</span><span class="block text-[11px] text-on-surface-variant mt-0.5">{{ $directoryLecturer->position ?: 'Pensyarah' }}</span><span class="block sm:hidden text-[11px] text-on-surface-variant mt-1 truncate">{{ $directoryLecturer->department }}</span></span>
+<span class="hidden sm:block max-w-[45%] min-w-0 text-right"><span class="block text-[10px] font-label font-bold uppercase tracking-wider text-secondary truncate">{{ $directoryLecturer->department }}</span><span class="block text-[11px] text-on-surface-variant mt-1 truncate">{{ $directoryLecturer->email }}</span></span>
+</button>
+@endforeach
+<div id="mentor-empty-state" class="hidden p-10 text-center"><span class="material-symbols-outlined text-3xl text-on-surface-variant">person_search</span><p class="mt-2 font-headline font-bold text-primary">No lecturers found</p><p class="mt-1 text-xs text-on-surface-variant">Try another name or choose a different department.</p></div>
+</div>
+<div class="px-6 py-4 border-t border-surface-container-high/70 bg-surface-container-low/50 flex flex-col sm:flex-row items-center justify-between gap-3"><p id="mentor-selection-hint" class="text-[11px] font-label text-on-surface-variant">Select a lecturer to continue.</p><div class="flex items-center gap-2"><button type="button" id="mentor-cancel" class="px-4 py-2.5 rounded-lg bg-surface-container-high text-primary font-label text-xs font-semibold">Cancel</button><button type="submit" id="mentor-submit" disabled class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed"><span class="material-symbols-outlined text-base">check</span>Assign Mentor</button></div></div>
+</form></section></div>
+<div id="student-drawer-backdrop" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 hidden"><section id="student-drawer" role="dialog" aria-modal="true" aria-labelledby="student-drawer-title" class="absolute top-0 right-0 h-full w-full max-w-lg bg-surface-container-lowest shadow-2xl p-6 overflow-y-auto transform translate-x-full transition-transform duration-300 flex flex-col"><div class="flex items-center justify-between pb-4 border-b border-surface-container-high/60"><div><h2 id="student-drawer-title" class="font-headline font-bold text-lg text-primary">Add New Student</h2><p class="text-xs text-on-surface-variant mt-1">Enter the student's roster information.</p></div><button type="button" id="student-drawer-close" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined">close</span></button></div><form action="{{ route('upp.students.store') }}" method="POST" class="space-y-4 mt-6 flex-1">@csrf
+<div><label for="student_id" class="block text-xs font-label font-bold text-primary mb-1.5">Student ID *</label><input id="student_id" name="student_id" value="{{ old('student_id') }}" maxlength="20" required class="w-full px-3 py-2.5 bg-surface-container-low rounded-lg text-sm font-label focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Enter student ID">@error('student_id')<p class="mt-1 text-xs text-error">{{ $message }}</p>@enderror</div>
+<div><label for="student_name" class="block text-xs font-label font-bold text-primary mb-1.5">Student Name *</label><input id="student_name" name="student_name" value="{{ old('student_name') }}" maxlength="100" required class="w-full px-3 py-2.5 bg-surface-container-low rounded-lg text-sm font-label focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Enter full name">@error('student_name')<p class="mt-1 text-xs text-error">{{ $message }}</p>@enderror</div>
+<div><label for="programme" class="block text-xs font-label font-bold text-primary mb-1.5">Programme *</label><input id="programme" name="programme" value="{{ old('programme') }}" maxlength="100" required class="w-full px-3 py-2.5 bg-surface-container-low rounded-lg text-sm font-label focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Diploma in Computer Science">@error('programme')<p class="mt-1 text-xs text-error">{{ $message }}</p>@enderror</div>
+<div><label for="semester" class="block text-xs font-label font-bold text-primary mb-1.5">Current Semester *</label><input type="number" id="semester" name="semester" value="{{ old('semester') }}" min="1" required class="w-full px-3 py-2.5 bg-surface-container-low rounded-lg text-sm font-label focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Enter semester">@error('semester')<p class="mt-1 text-xs text-error">{{ $message }}</p>@enderror</div>
+<div class="pt-4 border-t border-surface-container-high/60 flex items-center justify-end gap-3"><button type="button" id="student-drawer-cancel" class="px-4 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label text-xs font-semibold">Cancel</button><button type="submit" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label text-xs font-semibold">Add Student Record</button></div></form></section></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+ const backdrop=document.getElementById('mentor-modal-backdrop'), form=document.getElementById('mentor-assignment-form');
+ const search=document.getElementById('mentor-search'), dept=document.getElementById('mentor-department-filter');
+ const options=[...document.querySelectorAll('.mentor-option')], selected=document.getElementById('mentor-selected-id'), submit=document.getElementById('mentor-submit');
+ const count=document.getElementById('mentor-result-count'), empty=document.getElementById('mentor-empty-state'), hint=document.getElementById('mentor-selection-hint');
+ let selectedOption=null;
+ const filter=()=>{const term=search.value.trim().toLocaleLowerCase(), department=dept.value;let n=0;
+ options.forEach(o=>{const textMatch=!term||[o.dataset.name,o.dataset.email,o.dataset.position].some(v=>(v||'').includes(term));const show=textMatch&&(!department||o.dataset.department===department);o.classList.toggle('hidden',!show);if(show)n++;});
+ count.textContent=n;empty.classList.toggle('hidden',n!==0);
+ if(selectedOption&&selectedOption.classList.contains('hidden')){selectedOption=null;selected.value='';submit.disabled=true;hint.textContent='Selected lecturer is outside the current filters. Select another lecturer.';}
+ };
+ const choose=o=>{options.forEach(x=>{const active=x===o;x.setAttribute('aria-pressed',String(active));x.classList.toggle('bg-primary-fixed/60',active);const r=x.querySelector('.mentor-radio');r.classList.toggle('border-primary',active);r.classList.toggle('border-outline',!active);r.firstElementChild.classList.toggle('hidden',!active);});selectedOption=o;selected.value=o.dataset.lecturerId;submit.disabled=false;hint.textContent='Selected: '+o.querySelector('.font-headline').textContent.trim();};
+ const close=()=>{backdrop.classList.add('hidden');backdrop.classList.remove('flex');backdrop.setAttribute('aria-hidden','true');document.body.classList.remove('overflow-hidden');};
+ document.querySelectorAll('[data-open-mentor]').forEach(b=>b.addEventListener('click',()=>{form.action=b.dataset.action;document.getElementById('mentor-student-name').textContent=b.dataset.studentName;document.getElementById('mentor-student-id').textContent=b.dataset.studentId;document.getElementById('mentor-current-name').textContent=b.dataset.currentMentor||'Not assigned';search.value='';dept.value='';selected.value='';selectedOption=null;submit.disabled=true;hint.textContent='Select a lecturer to continue.';options.forEach(o=>{o.setAttribute('aria-pressed','false');o.classList.remove('bg-primary-fixed/60');const r=o.querySelector('.mentor-radio');r.classList.remove('border-primary');r.classList.add('border-outline');r.firstElementChild.classList.add('hidden');});filter();backdrop.classList.remove('hidden');backdrop.classList.add('flex');backdrop.setAttribute('aria-hidden','false');document.body.classList.add('overflow-hidden');setTimeout(()=>search.focus(),50);}));
+ options.forEach(o=>o.addEventListener('click',()=>choose(o)));search.addEventListener('input',filter);dept.addEventListener('change',filter);
+ document.getElementById('mentor-clear-filters').addEventListener('click',()=>{search.value='';dept.value='';filter();search.focus();});
+ document.getElementById('mentor-modal-close').addEventListener('click',close);document.getElementById('mentor-cancel').addEventListener('click',close);
+ backdrop.addEventListener('click',e=>{if(e.target===backdrop)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!backdrop.classList.contains('hidden'))close();});
+ form.addEventListener('submit',e=>{if(!selected.value){e.preventDefault();hint.textContent='Please select a lecturer first.';}});
+});
+</script>
+<script>(()=>{const back=document.getElementById('student-drawer-backdrop'),drawer=document.getElementById('student-drawer');const open=()=>{back.classList.remove('hidden');requestAnimationFrame(()=>drawer.classList.remove('translate-x-full'));document.body.classList.add('overflow-hidden')};const close=()=>{drawer.classList.add('translate-x-full');document.body.classList.remove('overflow-hidden');setTimeout(()=>back.classList.add('hidden'),300)};document.getElementById('btn-open-student').addEventListener('click',open);document.getElementById('student-drawer-close').addEventListener('click',close);document.getElementById('student-drawer-cancel').addEventListener('click',close);back.addEventListener('click',e=>{if(e.target===back)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!back.classList.contains('hidden'))close()});@if ($errors->any() || old('student_id') || old('student_name') || old('programme') || old('semester')) open(); @endif})();</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.getElementById('uppNotificationsToggle');
+  const menu = document.getElementById('uppNotificationsMenu');
+  const close = document.getElementById('uppNotificationsClose');
+  if (!toggle || !menu) return;
+  const setOpen = (open) => { menu.classList.toggle('hidden', !open); toggle.setAttribute('aria-expanded', String(open)); };
+  toggle.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+  if (close) close.addEventListener('click', () => setOpen(false));
+  document.addEventListener('click', (event) => { if (!menu.contains(event.target) && !toggle.contains(event.target)) setOpen(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+});
+</script>
+</body></html>
